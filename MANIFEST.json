@@ -1,0 +1,22 @@
+{
+  "AUTHORS.md": "41aaea6323c145e08659ed40eefe696264abe3a7409ba35a686c1a2ba5d658e6",
+  "CHANGELOG.md": "8de3e55e8538bd31caa985a3baa4a5056fa236c8c933be60e49ba4f723fe13b4",
+  "LICENSE": "3c3646aa638410dcf6323f3183adbf2d024042a605387cfe6cd8c86a15606b11",
+  "README.md": "72787a29b6dafa6c09918846fd92086f949dedc7400c08846ed76522e581ae2b",
+  "VALIDATION.md": "0d2e4236e40f4156c5f9a5a334248bd5393a251589838b335f748ca1b26a344e",
+  "demo/demo.css": "57fdeda0293dfa7936b62b261449e92cda21265dffe8f39cdb694f36ec9c26b3",
+  "demo/demo.js": "a37f734db3e6196795dc6e44ce2a4385f98a81809c94f5b804f8d0969e96d85e",
+  "demo/index.html": "0b7ef8651b126e1c7dc35d71e2e1ae58c894f6bfa31e1967a31de3d5ca28a7d9",
+  "demo/serve.mjs": "3af9646fd3d46894146253d5425d4c2bdb2d04b454901e4a72c774bdb0c1d7ce",
+  "glass.css": "1f45f9560925c16cc19f47d7d1ec4fae93d832cce35671a6c61320e0742be46a",
+  "glass.js": "8603b0e2a6b6ac73b68875aee368c38c6a82cf1c11514868c3144e50a0b0b7fb",
+  "index.d.ts": "96945639bbc1f664d73ab4c99c5682405d3d09362f5e44815bb2755fe0460493",
+  "maps.js": "f4b5ceadac03889a61c109cb84ed016282cdfff14f4561cb5912391cf14e2029",
+  "package.json": "1e5f8e07557906d84aaea6c7fa52c0d1f632bb1422ddcaf7cc307aa3f2a3a339",
+  "release/public-files.json": "034ad6b31c58316c5916aeec95eac86d4f99d81f168aaca520696067d5fde817",
+  "scripts/glass-grain.py": "4debaf4fb8a683f0d202cf7422632ece10383812ed5fe635bf89c7bf792e64a1",
+  "scripts/glass-map.c": "8c9144869d19d129de7db893aee3140f543cd6ad688cb70d56fea00fb5c35640",
+  "scripts/release.py": "6bea59c2d2905c6fa483a6c8fc1fe621a32eff0f6275aef634cf4caa1a4df3ee",
+  "tests/browser.mjs": "92c0df491d41e93a87adfaf5326572e799b68bd56854183578b857aa39dbfde7",
+  "tests/unit.mjs": "355c73417a7751cdad2ebdb4e9e794f908b4d10f5a3ebc5675f3a545ebc140c0"
+}

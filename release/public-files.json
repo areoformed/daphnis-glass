@@ -1,0 +1,38 @@
+{
+  "source_files": [
+    "AUTHORS.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "VALIDATION.md",
+    "demo/demo.css",
+    "demo/demo.js",
+    "demo/index.html",
+    "demo/serve.mjs",
+    "glass.css",
+    "glass.js",
+    "index.d.ts",
+    "maps.js",
+    "package.json",
+    "release/public-files.json",
+    "scripts/glass-grain.py",
+    "scripts/glass-map.c",
+    "scripts/release.py",
+    "tests/browser.mjs",
+    "tests/unit.mjs"
+  ],
+  "npm_files": [
+    "AUTHORS.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "VALIDATION.md",
+    "glass.css",
+    "glass.js",
+    "index.d.ts",
+    "maps.js",
+    "package.json",
+    "scripts/glass-grain.py",
+    "scripts/glass-map.c"
+  ]
+}

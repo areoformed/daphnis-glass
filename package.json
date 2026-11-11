@@ -1,0 +1,43 @@
+{
+  "name": "@areoform/felt-glass",
+  "version": "0.1.0",
+  "description": "Parameter-driven liquid and burred glass surfaces with independent rendering fallbacks.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Felt Glass contributors",
+  "contributors": [
+    {
+      "name": "Codex (OpenAI coding assistant)"
+    },
+    {
+      "name": "areoform"
+    }
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./glass.js"
+    },
+    "./glass.css": "./glass.css"
+  },
+  "files": [
+    "glass.js",
+    "maps.js",
+    "glass.css",
+    "index.d.ts",
+    "AUTHORS.md",
+    "CHANGELOG.md",
+    "scripts/glass-map.c",
+    "scripts/glass-grain.py",
+    "VALIDATION.md"
+  ],
+  "sideEffects": [
+    "./glass.css"
+  ],
+  "scripts": {
+    "test": "node --test tests/unit.mjs",
+    "demo": "node demo/serve.mjs",
+    "test:browser": "node tests/browser.mjs",
+    "release:check": "python3 scripts/release.py --check"
+  }
+}

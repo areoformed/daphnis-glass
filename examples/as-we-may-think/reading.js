@@ -8,7 +8,7 @@ const progress = document.querySelector('#progress');
 const status = document.querySelector('#reading-status');
 const finish = document.querySelector('#finish-status');
 const settings = document.querySelector('#glass-settings');
-const inputs = Object.fromEntries(['bend','roughness','grain-size','blur','tint','etched'].map(id => [id,document.getElementById(id)]));
+const inputs = Object.fromEntries(['refractive-index','thickness','roughness','grain-size','blur','tint','etched'].map(id => [id,document.getElementById(id)]));
 let size = 20, frame = 0, tuningFrame = 0, glass, observer, departed = false;
 
 function resize(delta) {
@@ -52,20 +52,24 @@ function updateFinish() {
   const rich = glass?.state.surfaces[0]?.renderer === 'svg';
   const names = {refracted:'Liquid glass',frosted:rich?'Burred glass':'Frosted pane',translucent:'Translucent glass',solid:'Solid pane'};
   finish.textContent = names[material] + (glass ? '.' : ' · basic finish.');
-  inputs.bend.disabled = !rich || material !== 'refracted';
-  inputs.roughness.disabled = !rich;
+  inputs['refractive-index'].disabled = inputs.thickness.disabled = !rich || material !== 'refracted';
+  inputs.roughness.disabled = !rich || Boolean(glass?.state.optics);
   inputs['grain-size'].disabled = !glass || material !== 'frosted';
   inputs.blur.disabled = material === 'solid' || material === 'translucent';
 }
 function apply() {
   tuningFrame = 0;
   const value = id => Number(inputs[id].value);
-  for (const id of ['bend','roughness','grain-size','blur','tint']) document.querySelector(`output[for="${id}"]`).textContent = inputs[id].value;
+  for (const id of ['refractive-index','thickness','roughness','grain-size','blur','tint']) document.querySelector(`output[for="${id}"]`).textContent = inputs[id].value;
   bar.style.setProperty('--pane-tint', value('tint'));
   bar.style.setProperty('--local-blur', value('blur') * 4 + 'px');
   bar.querySelectorAll('.bar-navigation .reading-button').forEach(button => button.classList.toggle('fg-etch',inputs.etched.checked));
   if (glass) {
-    const recipe = {bend:value('bend'),roughness:value('roughness'),grainSize:value('grain-size'),blur:value('blur'),fallbackBlur:value('blur')*4};
+    const optical = ['auto','refracted'].includes(surface.value);
+    const current = glass.state.optics;
+    if (optical && (!current || current.refractiveIndex !== value('refractive-index') || current.thickness !== value('thickness'))) glass.setOptics({refractiveIndex:value('refractive-index'),thickness:value('thickness')});
+    else if (!optical && current) glass.setOptics(null);
+    const recipe = {roughness:value('roughness'),grainSize:value('grain-size'),blur:value('blur'),fallbackBlur:value('blur')*4};
     glass.setRecipes({refracted:recipe,frosted:recipe});
     if (glass.state.requested !== surface.value) glass.setMaterial(surface.value);
   } else {
@@ -88,7 +92,7 @@ function chooseFinish() {
 }
 surface.disabled = false;
 surface.addEventListener('input',chooseFinish);
-for (const input of Object.values(inputs)) { input.disabled = false; input.addEventListener('input',queueTuning); }
+for (const [id,input] of Object.entries(inputs)) { input.disabled = false; input.addEventListener(['refractive-index','thickness'].includes(id)?'change':'input',queueTuning); }
 const reset = document.querySelector('#reset-glass');
 reset.disabled = false;
 reset.addEventListener('click',chooseFinish);
@@ -110,7 +114,7 @@ try {
   const {createGlass} = await import('../../glass.js');
   // A parsed effect is insufficient if the accompanying material styles never loaded.
   if (getComputedStyle(bar).getPropertyValue('--fg-css-ready').trim() === '1' && !departed) {
-    glass = createGlass(bar, {material:surface.value});
+    glass = createGlass(bar, {material:surface.value,optics:['auto','refracted'].includes(surface.value)?{refractiveIndex:Number(inputs['refractive-index'].value),thickness:Number(inputs.thickness.value)}:null});
     bar.dataset.glassReady = 'true';
     observer = new MutationObserver(updateFinish);
     observer.observe(bar,{attributes:true,attributeFilter:['data-fg-material','data-fg-renderer','data-fg-engine']});

@@ -27,7 +27,19 @@
     "scripts/release.py",
     "tests/browser.mjs",
     "tests/reading-browser.mjs",
-    "tests/unit.mjs"
+    "tests/unit.mjs",
+    "experiments/sessile-drop/MODEL.md",
+    "experiments/sessile-drop/model.mjs",
+    "experiments/sessile-drop/lab.mjs",
+    "experiments/sessile-drop/index.html",
+    "experiments/sessile-drop/standalone.html",
+    "experiments/sessile-drop/build.py",
+    "experiments/sessile-drop/verify.mjs",
+    "optics.js",
+    "optics.d.ts",
+    "OPTICS.md",
+    "tests/optics.mjs",
+    "tests/optics-browser.mjs"
   ],
   "npm_files": [
     "AUTHORS.md",
@@ -41,6 +53,9 @@
     "maps.js",
     "package.json",
     "scripts/glass-grain.py",
-    "scripts/glass-map.c"
+    "scripts/glass-map.c",
+    "optics.js",
+    "optics.d.ts",
+    "OPTICS.md"
   ]
 }

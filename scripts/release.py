@@ -31,7 +31,7 @@ def validate(deny_file=None):
     if pkg.get('license')!='MIT' or pkg.get('dependencies') or pkg.get('devDependencies'):raise SystemExit('Unexpected license or dependencies')
     if not (ROOT/'LICENSE').read_text().startswith('MIT License'):raise SystemExit('MIT text missing')
     if 'in progress' in (ROOT/'VALIDATION.md').read_text():raise SystemExit('Release validation is incomplete')
-    subprocess.run(['node','--test','tests/unit.mjs'],cwd=ROOT,check=True)
+    subprocess.run(['node','--test','tests/unit.mjs','tests/optics.mjs'],cwd=ROOT,check=True)
     return mapping,pkg,allowed
 
 def main():

@@ -1,6 +1,11 @@
 # Changelog
 
-## Unreleased
+## 0.2.0
+
+- The material demo and As We May Think reader now use index-driven optics by default for their clear finish. Refractive index and thickness are adjustable behind the reader's existing gear; textured and simpler finishes retain their own paths.
+
+- Added an opt-in, index-driven Snell/Fresnel core, a rounded-cap direct-transmission adapter, documented precision/resource fallbacks, and a custom-index demo control. Scalar materials do not infer dispersion or grain.
+- Retain unchanged surface maps across refresh/visibility changes, independently of shared cache eviction. No scroll-time optical generation.
 
 - Gave the finish chevron a consistent visible size and inset, with text clearance and a native forced-color fallback.
 

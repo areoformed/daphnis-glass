@@ -28,12 +28,17 @@ try{
  await media([{name:'forced-colors',value:'none'},{name:'prefers-reduced-transparency',value:'no-preference'},{name:'prefers-contrast',value:'no-preference'}]);
  console.log('Browser:',(await cdp('Browser.getVersion')).product);
  await nav();await wait("document.querySelector('.reading-bar').dataset.fgRenderer==='svg'");
+ check(await ev("!!document.querySelector('filter[id$=optical] feComposite')&&!document.querySelector('#refractive-index').disabled"),'Reading example uses the physical material by default');
  check(await ev("document.querySelectorAll('[id^=passage-]').length===73&&document.querySelectorAll('[id^=section-]').length===8"),'Complete essay structure survives the new bar');
  check(await ev("document.querySelector('.reading-bar').getBoundingClientRect().width>=640"),'A continuous full-width reading bar');
  check(await ev("!document.querySelector('#glass-settings').open"),'Fine adjustments are discreet by default');
  check(await ev("!document.querySelector('#surface').closest('#glass-settings')&&document.querySelector('#surface').getBoundingClientRect().height>=40"),'Named finish selector is directly available on the bar');
  await shot('bar-desktop');
  await click('.settings-toggle');check(await ev("document.querySelector('#glass-settings').open"),'Pointer opens native glass settings');
+ await ev("window.initialOpticalMap=document.querySelector('filter[id$=optical] feImage').getAttribute('href');document.querySelector('#refractive-index').value='1.33';document.querySelector('#refractive-index').dispatchEvent(new Event('change'))");
+ await wait("document.querySelector('output[for=refractive-index]').textContent==='1.33'&&document.querySelector('filter[id$=optical] feImage').getAttribute('href')!==initialOpticalMap");check(true,'Refractive-index control changes the actual optical map');
+ await ev("window.thinOpticalMap=document.querySelector('filter[id$=optical] feImage').getAttribute('href');document.querySelector('#thickness').value='12';document.querySelector('#thickness').dispatchEvent(new Event('change'))");
+ await wait("document.querySelector('output[for=thickness]').textContent==='12'&&document.querySelector('filter[id$=optical] feImage').getAttribute('href')!==thinOpticalMap");check(true,'Thickness control changes the actual optical map');
  await choose('frosted');await wait("document.querySelector('.reading-bar').dataset.fgMaterial==='frosted'&&document.querySelector('.reading-bar').dataset.fgRenderer==='svg'");
  check(await ev("document.querySelector('#roughness').value==='1'&&document.querySelector('#finish-name').textContent==='Burred glass'"),'Named burred finish applies its declared recipe');
  await ev("document.querySelector('#tint').value='.8';document.querySelector('#tint').dispatchEvent(new Event('input'))");
@@ -74,7 +79,7 @@ try{
  await cdp('Network.setBlockedURLs',{urls:['*/glass.css','*/glass.js']});await nav();
  await click('#larger');check(await ev("getComputedStyle(document.querySelector('.essay')).fontSize==='20px'"),'Missing enhancement CSS and JS leave reading controls usable');
  await choose('solid');await wait("document.querySelector('.reading-bar').dataset.fallbackMaterial==='solid'");check(await ev(visiblePane),'Basic material selection works without enhancement files');
- check(await ev("document.querySelector('#bend').disabled&&!document.querySelector('#tint').disabled"),'Unavailable optics are disabled while supported controls remain live');
+ check(await ev("document.querySelector('#refractive-index').disabled&&document.querySelector('#thickness').disabled&&!document.querySelector('#tint').disabled"),'Unavailable optics are disabled while supported controls remain live');
  await cdp('Network.setBlockedURLs',{urls:[]});
  await nav("const original=CSS.supports.bind(CSS);CSS.supports=(p,v)=>v?.includes('url(')?false:original(p,v)");
  await wait("document.querySelector('.reading-bar').dataset.fgMaterial==='frosted'");check(await ev(visiblePane),'No SVG backdrop support keeps a visible CSS frosted bar');

@@ -1,4 +1,4 @@
-# Felt Glass
+# Daphnis Glass
 
 **Developed by Codex in collaboration with areoform. MIT licensed.**
 
@@ -55,6 +55,7 @@ The component decorates existing HTML elements. It does not replace, wrap or re-
 |---|---|
 | `setMaterial(name)` | Select `auto`, `refracted`, `frosted`, `translucent`, or `solid`. |
 | `setRecipes(patch)` | Update validated numeric parameters for either rich material. |
+| `setOptics(patch)` | Enable/update an index-driven optical material; `null` returns to artistic recipes. |
 | `refresh()` | Re-evaluate capabilities and geometry, useful after revealing a hidden element. |
 | `state` | Read the requested material and each element's actual material, renderer and engine. |
 | `destroy()` | Disconnect observers/listeners, cancel owned map work, remove owned SVG filters, and restore the element attributes/styles/classes taken over by the controller. Repeated calls are safe. |
@@ -70,6 +71,18 @@ glass.setMaterial('refracted');
 ```
 
 Recipe fields are `bend` and `roughness` (0–1), `rim` (0.5–64 px), `blur` (0–32 px), `displacement` (0–64 px), `saturation` (0–2), `fallbackBlur` (0–40 px), `grainSize` (32–512 CSS px), and an unsigned 32-bit `seed`. Invalid values fail before changing the current configuration. Curvature follows the element's CSS border radius; the optical shape is a rounded rectangle.
+
+### Index-driven materials
+
+```js
+const glass = createGlass('.pane', {
+  material: 'refracted',
+  optics: {refractiveIndex: 1.52}
+});
+glass.setOptics({refractiveIndex: 1.333});
+```
+
+This optional path generates Snell-law rays and Fresnel direct transmission for a rounded cap with a flat underside. Defaults are 6 CSS pixels of thickness, zero document gap and surrounding index 1. The standalone interface solver also supports arbitrary incident directions, normals and positive indices. A scalar index does not imply a color, dispersion or frost texture. The demo's **Use Snell optics** checkbox exposes a custom index. Read [the model, caching contract and limits](OPTICS.md) before using physical parameters.
 
 ## Appearance
 
@@ -91,14 +104,14 @@ The grain is static and embedded. It varies in size, strength and dispersal; the
 
 - **Material:** refracted → frosted → translucent → solid.
 - **Backdrop renderer:** SVG optics → CSS frost/blur → simpler CSS surfaces.
-- **Map generation:** WebGPU → bundled WASM → JavaScript, using the same parameters for both rich materials.
+- **Artistic map generation:** WebGPU → bundled WASM → JavaScript, using the same parameters for both rich materials. Index-driven optics currently uses cooperative JavaScript and retains the same CSS renderer fallbacks.
 - **Etching:** masked roughened rim → inset CSS edge. Forced colors remove the decorative layers.
 
 A failed map engine does not require a different supported material. A renderer failure does not disable the contents. Parsing an SVG filter URL does not establish that a browser paints it; this release enables that enhancement only in the tested Chromium family. Other engines retain CSS surfaces.
 
 `auto` honors reduced transparency and increased contrast. An explicit material can override those surface defaults; forced colors always win. The component introduces no motion, persistence, telemetry, cookies, authentication or network requests. It does not alter document source or process user data.
 
-Maps are limited to 300,000 pixels and 4,096 pixels per dimension. WASM memory is fixed at 1.5 MiB. Per controller, work is limited to two active and 32 queued jobs, with four cached images. Setup and decoding have deadlines. GPU resources are released after generation. A richer backend is not a performance guarantee; device performance has not been benchmarked.
+Maps are limited to 300,000 pixels and 4,096 pixels per dimension. WASM memory is fixed at 1.5 MiB. Per controller, work is limited to two active and 32 queued jobs, with four shared cached images plus each live surface's retained map. Unchanged panes reuse those maps across scrolling, refreshes and visibility changes. Setup and decoding have deadlines. GPU resources are released after generation. A richer backend is not a performance guarantee; device performance has not been benchmarked.
 
 The host must serve the modules and CSS. Optional maps/grain need `img-src data:` under a strict CSP. The WASM backend can use the narrowly scoped `script-src 'wasm-unsafe-eval'` permission; if it is blocked, JavaScript generation remains available. JavaScript `unsafe-eval` is not required. Do not weaken an untrusted document sandbox just to enable this decorative effect.
 
@@ -125,4 +138,8 @@ python3 scripts/release.py --output /tmp/felt-glass-release
 
 The exporter accepts only the explicit release file map, rejects unknown files and links, scans for private material, runs unit checks, checks the npm package membership, and creates checksummed source ZIP and npm tarball archives. It performs no publishing or remote writes.
 
-Future material work is recorded in the [optics roadmap](https://github.com/areoformed/daphnis-glass/blob/main/ROADMAP.md). Index of refraction and physical depth are deferred; the current implementation remains a displacement-based approximation.
+Future material work is recorded in the [optics roadmap](ROADMAP.md). Index-driven direct refraction is implemented as an opt-in path; the browser adapter remains a bounded displacement-map approximation. Existing recipes are unchanged by default.
+
+### Water-drop optics study
+
+The [first physical reference](experiments/sessile-drop/MODEL.md) models a sessile water drop on a hydrophobic transparent support. Its [standalone study](experiments/sessile-drop/standalone.html) exposes contact angle, volume, optical depth and wavelength, with traced rays and a rainbow diagnostic. It opens directly from disk. This experiment does not replace the production renderer or claim experimental calibration.

@@ -1,0 +1,193 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Daphnis · A drop on a surface</title>
+<style>
+:root{color-scheme:light;--ink:#163345;--water:#247b9b;--rule:#c9d9e3;--paper:#f6fafc;font-family:ui-sans-serif,system-ui,sans-serif;color:var(--ink);background:var(--paper)}*{box-sizing:border-box}body{margin:0;padding:30px clamp(16px,4vw,60px) 60px}main{max-width:1350px;margin:auto}h1{font:normal clamp(30px,4vw,49px)/1.1 Georgia,serif;margin:0 0 10px}header p{max-width:77ch;line-height:1.55;margin:0 0 22px}.layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,1fr);gap:28px}figure{margin:0}figcaption{font-size:14px;line-height:1.5;margin:9px 0 19px;max-width:78ch}h2{font-size:18px;font-weight:600;margin:0 0 10px}canvas{display:block;width:100%;height:auto;background:white;border:1px solid var(--rule)}fieldset{border:0;border-top:1px solid var(--rule);margin:20px 0;padding:17px 0 0;display:grid;grid-template-columns:repeat(3,minmax(130px,1fr));gap:20px}legend{padding:0 12px 0 0;font-weight:600}label{display:grid;gap:8px;font-size:14px}input[type=range]{width:100%;margin:0;accent-color:var(--water)}output{font-variant-numeric:tabular-nums}label span{display:flex;justify-content:space-between;gap:12px}button,select{font:inherit;color:inherit;background:white;border:1px solid #839faf;padding:8px 12px;border-radius:5px}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ca6b37;outline-offset:3px}.presets{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-block:1px solid var(--rule);padding:15px 0;margin-top:16px}.facts span{font-size:13px}.facts strong{display:block;font-size:19px;font-weight:500;margin-top:4px;font-variant-numeric:tabular-nums}p.note{font-size:14px;line-height:1.5;max-width:80ch}#validity{background:#e6f1f5;padding:12px 16px;border-left:3px solid var(--water)}#validity.gravity{background:#fff1dc;border-color:#aa691b}a{color:#165e7e}details{margin-top:20px;border-top:1px solid var(--rule);padding-top:15px}summary{cursor:pointer;font-weight:600}details p,details li{max-width:85ch;font-size:14px;line-height:1.6}.legend{display:flex;gap:16px;font-size:13px;margin:8px 0}.legend span::before{content:'';display:inline-block;width:18px;border-top:2px solid var(--water);vertical-align:middle;margin-right:5px}.legend .contact::before{border-top-style:dashed;border-color:#8555a0}#status{min-height:1.5em;font-size:13px}.rainbow-controls{display:flex;align-items:center;gap:15px;margin:12px 0}.rainbow-controls label{flex:1}footer{font-size:13px;margin-top:35px;color:#526d7d}@media(max-width:850px){.layout{grid-template-columns:1fr}fieldset{grid-template-columns:repeat(2,minmax(120px,1fr))}.facts{grid-template-columns:repeat(2,1fr)}}@media(max-width:390px){fieldset{grid-template-columns:1fr}}@media(forced-colors:active){canvas{forced-color-adjust:none}}
+</style><main><header><h1>A drop on a surface</h1><p>A first optics study for Daphnis. Change how water meets the support, then see where rays from the page end up. Clear water, a transparent hydrophobic support, and an orthographic view from above.</p></header>
+<div class="presets" aria-label="Contact-angle examples"><button data-angle="30">Spreading · 30°</button><button data-angle="90">Hemisphere · 90°</button><button data-angle="110">Beading · 110°</button><button data-angle="150">Strong beading · 150°</button></div>
+<fieldset><legend>Shape and optical stack</legend>
+<label><span>Contact angle <output for="angle" id="angle-out"></output></span><input id="angle" type="range" min="15" max="165" step="1" value="110"></label>
+<label><span>Water volume <output for="volume" id="volume-out"></output></span><input id="volume" type="range" min="0.05" max="5" step="0.05" value="0.5"></label>
+<label><span>Page below support <output for="gap" id="gap-out"></output></span><input id="gap" type="range" min="0" max="2.5" step="0.01" value="0.2"></label>
+<label><span>Support thickness <output for="thickness" id="thickness-out"></output></span><input id="thickness" type="range" min="0.02" max="1" step="0.01" value="0.2"></label>
+<label><span>Wavelength <output for="wavelength" id="wavelength-out"></output></span><input id="wavelength" type="range" min="400" max="700" step="1" value="550"></label>
+<label>Pattern<select id="pattern"><option value="grid">Grid and type</option><option value="dots">Dot field</option></select></label>
+</fieldset>
+<div class="layout"><section><h2>Transmitted view of the page</h2><figure><canvas id="view" width="700" height="500" aria-label="Grid refracted by a water droplet; dashed circle marks its contact patch"></canvas><div class="legend"><span>Drop silhouette</span><span class="contact">Contact patch</span></div><figcaption>Same physical scale at every volume: 200 pixels per millimetre. This is the transmitted component; reflected surroundings are omitted. Hatched regions mean a traced ray did not reach the page within the bounded trace.</figcaption></figure><div class="facts" id="facts" aria-live="polite"></div><p id="validity" class="note"></p><p id="status" role="status"></p></section>
+<section><h2>Cross-section and backward ray paths</h2><figure><canvas id="section" width="650" height="370" aria-label="Drop profile above a transparent support, with rays traced toward the page"></canvas><figcaption>Contact angle is measured inside the water. Above 90°, the sphere extends beyond its contact circle. The diagram is fitted to the optical stack; ray colors identify paths.</figcaption></figure><h2>The rainbow path</h2><figure><canvas id="rainbow" width="650" height="270" aria-label="Three wavelengths enter a free sphere, reflect once internally, and emerge"></canvas><figcaption id="rainbow-info"></figcaption></figure><div class="rainbow-controls"><label><span>Incidence <output id="incidence-out"></output></span><input id="incidence" type="range" min="30" max="80" step="0.1" value="59.4"></label><button id="stationary">Rainbow angle</button></div><p class="note">This separate free-sphere diagnostic follows your rainbow reference. One partial internal reflection produces this branch; total internal reflection is a different condition. A sessile drop’s support can interrupt the free-sphere path.</p></section></div>
+<details><summary>Model, assumptions and literature</summary><p>The shape is the small-drop spherical-cap limit of Young–Laplace: a sphere clipped by a plane, with fixed volume and specified contact angle. Gravity is diagnosed by Bond numbers, not solved. Surface roughness, pinning, Cassie/Wenzel transitions, motion and evaporation are not simulated.</p><p>Air has n=1; the support has a chosen n=1.52. Water’s wavelength-dependent index uses IAPWS R9-97 at 20°C and a nominal density of 998.207 kg/m³. Each curved or planar crossing obeys vector Snell refraction and Fresnel weights. Polarization intensities are tracked separately for the meridional paths. Multiple partial-reflection images, finite-aperture blur, interference, diffraction and environmental lighting are omitted. The rainbow sketch traces its own one-reflection branch.</p><p>Central magnification is the signed, local ray-map limit. A sign change indicates inversion; values near the singular limit are not a realistic prediction of infinite resolution. The grid uses a bounded radial lookup and raster sampling. This is a numerical reference study, not measured material fidelity or a new production renderer.</p><ul><li><a href="https://doi.org/10.1039/FT9918701579">O’Brien &amp; van den Brule (1991): small sessile-drop shapes, including angles above 90°.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6193248/">van der Heijden et al. (2018): spherical-cap geometry, wetting and pinning.</a></li><li><a href="https://doi.org/10.1103/PhysRevApplied.19.044030">Kilbride et al. (2023): pattern distortion, droplet shape and magnification.</a></li><li><a href="https://iapws.org/technical-guidance/release/Rindex">IAPWS R9-97: refractive index versus wavelength, temperature and density.</a></li><li><a href="https://iapws.org/technical-guidance/release/Surf-H2O">IAPWS: surface tension formulation.</a></li></ul><p>See <a href="MODEL.md">MODEL.md</a> for the derivation, verification and the limits of the supplied image references.</p></details>
+<noscript>This study needs JavaScript for ray tracing. The <a href="MODEL.md">model and references</a> remain available.</noscript><footer>Daphnis Glass · optical reference study · 12 November 2026</footer><script>
+(()=>{
+// Daphnis Glass optics study. Lengths in mm, angles in degrees at public boundaries.
+// Fresh reference implementation: no DOM, canvas, WASM or production renderer dependency.
+const radians=d=>d*Math.PI/180, degrees=r=>r*180/Math.PI;
+const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0);
+const add=(a,b,k=1)=>a.map((x,i)=>x+k*b[i]);
+const norm=v=>{const l=Math.hypot(...v);return v.map(x=>x/l);};
+const reflect=(d,n)=>add(d,n,-2*dot(d,n));
+function bound(value,lo,hi,name){if(!Number.isFinite(value)||value<lo||value>hi)throw RangeError(`${name} must be between ${lo} and ${hi}`);return value;}
+
+// IAPWS R9-97, Eq.1/Table1. Absolute index relative to vacuum, not a color fit.
+// Default density is a nominal 20°C liquid density, not an equation of state.
+function waterIndex(wavelengthNm=550,temperatureK=293.15,density=998.207){
+  bound(wavelengthNm,200,1100,'wavelength');bound(temperatureK,261.15,773.15,'temperature');bound(density,0,1060,'density');
+  const l=wavelengthNm/589,l2=l*l,T=temperatureK/273.15,r=density/1000;
+  const B=r*(.244257733+.00974634476*r-.00373234996*T+.000268678472*l2*T+.00158920570/l2+.00245934259/(l2-.2292020**2)+.900704920/(l2-5.4329374**2)-.0166626219*r*r);
+  return Math.sqrt((1+2*B)/(1-B));
+}
+function drop({volume=1,angle=110}={}){
+  bound(volume,.001,1000,'volume');bound(angle,5,175,'contact angle');
+  const theta=radians(angle),c=Math.cos(theta),R=Math.cbrt(3*volume/(Math.PI*(2-3*c+c*c*c)));
+  const h=R*(1-c),a=R*Math.sin(theta),zc=-R*c;
+  const capillaryLength=Math.sqrt(.0728/(998.207*9.80665))*1000;
+  return {volume,angle,R,h,a,zc,silhouette:angle>90?R:a,capillaryLength,bondA:(a/capillaryLength)**2,bondR:(R/capillaryLength)**2,bondH:(h/capillaryLength)**2};
+}
+// Normal points into the incident medium. Null transmitted direction means TIR.
+function interfaceRay(incident,normal,n1,n2){
+  const d=norm(incident),N=norm(normal),ci=Math.max(0,Math.min(1,-dot(d,N))),eta=n1/n2;
+  const k=1-eta*eta*(1-ci*ci),reflected=reflect(d,N);
+  if(k<0)return {transmitted:null,reflected,reflectance:1,Rs:1,Rp:1,tir:true};
+  const ct=Math.sqrt(Math.max(0,k)),transmitted=norm(add(d.map(x=>eta*x),N,eta*ci-ct));
+  // Unpolarized Fresnel power reflectance. n^2 radiance factors cancel for air→air paths.
+  const rs=(n1*ci-n2*ct)/(n1*ci+n2*ct),rp=(n2*ci-n1*ct)/(n2*ci+n1*ct);
+  const Rs=ci<1e-13&&ct<1e-13?0:rs*rs,Rp=ci<1e-13&&ct<1e-13?0:rp*rp;
+  return {transmitted,reflected,reflectance:(Rs+Rp)/2,Rs,Rp,tir:false};
+}
+function roots(p,d,g){
+  const q=[p[0],p[1],p[2]-g.zc],b=dot(q,d),disc=b*b-dot(q,q)+g.R*g.R;
+  return disc<0?[]:[-b-Math.sqrt(Math.max(0,disc)),-b+Math.sqrt(Math.max(0,disc))];
+}
+// Full sphere clipped at the support plane; never a truncated single-valued height field.
+// Dominant transmitted branch + TIR. Partial reflected branches are not composited.
+function trace(g,r,{nWater=waterIndex(),nSolid=1.52,thickness=.3,gap=.35,maxEvents=12}={}){
+  bound(nWater,1,2,'water index');bound(nSolid,1,2,'substrate index');bound(thickness,0,4,'substrate thickness');bound(gap,0,10,'source gap');
+  const eps=1e-8*g.R,sourceZ=-thickness-gap,indices={air:1,water:nWater,solid:nSolid};
+  let p=[r,0,g.h+g.R],d=[0,0,-1],medium='air',throughput=1,Ts=1,Tp=1;const path=[{p:[...p],medium}],events=[];
+  for(let iteration=0;iteration<maxEvents;iteration++){
+    const candidates=[];
+    const plane=(z,kind,normal,to)=>{if(Math.abs(d[2])<1e-12)return;const t=(z-p[2])/d[2];if(t>eps)candidates.push({t,kind,normal,to});};
+    if(medium==='air'||medium==='water'){
+      for(const t of roots(p,d,g))if(t>eps){const q=add(p,d,t);if(q[2]>eps){const out=norm([q[0],q[1],q[2]-g.zc]);candidates.push({t,kind:'curved',normal:medium==='water'?out.map(x=>-x):out,to:medium==='water'?'air':'water'});}}
+    }
+    if(medium==='water')plane(0,'contact',[0,0,1],thickness>0?'solid':'air');
+    if(medium==='solid'){
+      if(d[2]<0)plane(-thickness,'substrate back',[0,0,1],'air');
+      else{
+        const t=-p[2]/d[2],q=add(p,d,t);
+        plane(0,'substrate front',[0,0,-1],Math.hypot(q[0],q[1])<=g.a?'water':'air');
+      }
+    }
+    if(medium==='air'&&p[2]>=0&&d[2]<0&&thickness>0)plane(0,'dry substrate',[0,0,1],'solid');
+    if(medium==='air'&&p[2]<-thickness&&d[2]>0&&thickness>0)plane(-thickness,'substrate back',[0,0,-1],'solid');
+    if(d[2]<0&&p[2]>=sourceZ-eps){const t=(sourceZ-p[2])/d[2];if(t>=0)candidates.push({t,kind:'source'});}
+    candidates.sort((a,b)=>a.t-b.t);const hit=candidates[0];
+    if(!hit)return {status:'escaped',path,events,throughput};
+    p=add(p,d,hit.t);path.push({p:[...p],medium});
+    if(hit.kind==='source')return {status:'source',sourceRadius:p[0],throughput,path,events};
+    const optics=interfaceRay(d,hit.normal,indices[medium],indices[hit.to]);
+    events.push({at:[...p],kind:hit.kind,from:medium,to:hit.to,...optics});
+    if(optics.tir)d=optics.reflected;
+    else{d=optics.transmitted;Ts*=1-optics.Rs;Tp*=1-optics.Rp;throughput=(Ts+Tp)/2;medium=hit.to;}
+    // Distances to the next event are filtered by eps; keep the exact surface point.
+  }
+  return {status:'event limit',path,events,throughput};
+}
+function paraxialJacobian(g,{nWater=waterIndex(),nSolid=1.52,thickness=.3,gap=.35}={}){
+  return 1-(nWater-1)/g.R*(g.h/nWater+thickness/nSolid+gap);
+}
+// User's rainbow diagram: one PARTIAL internal reflection in a free sphere.
+// This is a distinct ray family from the drop-on-substrate transmission experiment.
+function rainbow(incidenceDeg=59.4,n=waterIndex()){
+  bound(incidenceDeg,0,89.99,'incidence');bound(n,1.000001,1.99999,'index');
+  const i=radians(incidenceDeg),r=Math.asin(Math.sin(i)/n);
+  const entry=[-Math.cos(i),Math.sin(i),0],g={R:1,zc:0};let d=[1,0,0];
+  const a=interfaceRay(d,entry,1,n);d=a.transmitted;
+  const next=(p,d)=>{const t=roots(p,d,g).filter(t=>t>1e-8).sort((a,b)=>a-b)[0];return add(p,d,t);};
+  const back=next(entry,d),b=interfaceRay(d,back.map(x=>-x),n,1);d=b.reflected;
+  const exit=next(back,d),c=interfaceRay(d,exit.map(x=>-x),n,1);
+  return {i:incidenceDeg,r:degrees(r),phi:degrees(4*r-2*i),deviation:degrees(Math.PI+2*i-4*r),entry,back,exit,direction:c.transmitted,internalReflectance:b.reflectance,energy:((1-a.Rs)*b.Rs*(1-c.Rs)+(1-a.Rp)*b.Rp*(1-c.Rp))/2,internalTir:b.tir};
+}
+const rainbowStationary=n=>degrees(Math.asin(Math.sqrt((4-n*n)/3)));
+
+const $=id=>document.getElementById(id),controls=['angle','volume','gap','thickness','wavelength'];
+const cvs=$('view'),ctx=cvs.getContext('2d'),side=$('section').getContext('2d'),bow=$('rainbow').getContext('2d');
+if(!ctx||!side||!bow){$('status').textContent='This browser cannot draw the study. The model and literature are available below and in MODEL.md.';}else{
+const tile=document.createElement('canvas');tile.width=tile.height=600;const tex=tile.getContext('2d');
+let pixels,queued=false;
+function pattern(){
+ tex.fillStyle='#fff';tex.fillRect(0,0,600,600);const dots=$('pattern').value==='dots';
+ tex.strokeStyle='#bacfdc';tex.lineWidth=1;
+ for(let i=0;i<600;i+=50){if(!dots){tex.beginPath();tex.moveTo(i,0);tex.lineTo(i,600);tex.moveTo(0,i);tex.lineTo(600,i);tex.stroke();}for(let j=0;j<600;j+=50){tex.fillStyle='#28576c';tex.beginPath();tex.arc(i,j,dots?4:1.5,0,Math.PI*2);tex.fill();}}
+ if(!dots){tex.fillStyle='#243e4b';tex.font='28px Georgia';for(let i=30;i<600;i+=300){tex.fillText('Water & light',i,72);tex.fillText('Aa 012345',i,222);tex.fillText('Look closely.',i,372);tex.fillText('Through a drop',i,522);}tex.fillText('Aa',285,310);}
+ pixels=tex.getImageData(0,0,600,600).data;
+}
+const mod=(x,n)=>(x%n+n)%n;
+function section(g,options){
+ const c=side,w=c.canvas.width,h=c.canvas.height,min=-options.thickness-options.gap,max=g.h+g.R;
+ c.clearRect(0,0,w,h);const scale=Math.min((w-60)/(4*g.R),(h-60)/(max-min||1));
+ const x=v=>w/2+v*scale,z=v=>25+(max-v)*scale;
+ c.fillStyle='#e1edf3';c.fillRect(10,z(0),w-20,Math.max(1,options.thickness*scale));
+ c.strokeStyle='#8fa8b7';c.lineWidth=1;c.beginPath();c.moveTo(10,z(0));c.lineTo(w-10,z(0));c.stroke();
+ c.beginPath();for(let i=0;i<=240;i++){const a=-radians(g.angle)+2*radians(g.angle)*i/240;const px=x(g.R*Math.sin(a)),py=z(g.zc+g.R*Math.cos(a));i?c.lineTo(px,py):c.moveTo(px,py);}c.closePath();c.fillStyle='#d6ecf4';c.fill();c.strokeStyle='#247b9b';c.lineWidth=2;c.stroke();
+ const rayColors=['#d36b35','#8455a2','#188b7c'];
+ for(const [j,r] of [-.75,-.38,0,.38,.75].entries()){
+  const result=trace(g,r*g.silhouette,options);c.beginPath();for(const [i,q]of result.path.entries())i?c.lineTo(x(q.p[0]),z(q.p[2])):c.moveTo(x(q.p[0]),z(q.p[2]));c.strokeStyle=rayColors[j%3];c.lineWidth=1.25;c.stroke();
+ }
+ c.strokeStyle='#536c7a';c.setLineDash([5,4]);c.beginPath();c.moveTo(10,z(min));c.lineTo(w-10,z(min));c.stroke();c.setLineDash([]);
+ c.fillStyle='#163345';c.font='13px system-ui';c.fillText('Page / pattern',15,z(min)-7);c.fillText('Transparent support',15,z(0)+15);
+ c.strokeStyle='#8555a0';c.setLineDash([3,3]);c.beginPath();c.moveTo(x(-g.a),z(0));c.lineTo(x(g.a),z(0));c.stroke();c.setLineDash([]);
+ c.beginPath();c.arc(x(-g.a),z(0),24,0,-radians(g.angle),true);c.stroke();c.fillText(`θ = ${g.angle}°`,x(-g.a)-40,z(0)-30);
+}
+function rainbowFigure(){
+ const c=bow,w=c.canvas.width,h=c.canvas.height,R=94,cx=w*.50,cy=h/2;
+ const incidence=+$('incidence').value;const p=q=>[cx+q[0]*R,cy-q[1]*R];
+ c.clearRect(0,0,w,h);c.strokeStyle='#a0bccb';c.fillStyle='#f3f9fc';c.beginPath();c.arc(cx,cy,R,0,2*Math.PI);c.fill();c.stroke();
+ for(const [nm,color]of [[650,'#bf413a'],[550,'#338a58'],[450,'#356bc1']]){
+  const q=rainbow(incidence,waterIndex(nm)),entry=p(q.entry),back=p(q.back),exit=p(q.exit);
+  c.strokeStyle=color;c.lineWidth=1.8;c.beginPath();c.moveTo(20,entry[1]);c.lineTo(...entry);c.lineTo(...back);c.lineTo(...exit);c.lineTo(exit[0]+q.direction[0]*200,exit[1]-q.direction[1]*200);c.stroke();
+ }
+ const n=waterIndex(+$('wavelength').value),q=rainbow(incidence,n);
+ $('incidence-out').value=`${incidence.toFixed(1)}°`;
+ $('rainbow-info').textContent=`At the selected wavelength: r = ${q.r.toFixed(2)}°, φ = 4r − 2i = ${q.phi.toFixed(2)}°; deflection = ${q.deviation.toFixed(2)}°. The one-reflection branch carries ${(100*q.energy).toFixed(2)}% of the incident ray power in this ideal model. Red, green and blue paths use 650, 550 and 450 nm; their colors identify rays.`;
+}
+function render(){
+ queued=false;const begin=performance.now(),g=drop({volume:+$('volume').value,angle:+$('angle').value});
+ const options={gap:+$('gap').value,thickness:+$('thickness').value,nWater:waterIndex(+$('wavelength').value),nSolid:1.52};
+ for(const id of controls)$(`${id}-out`).value=id==='angle'?`${$(id).value}°`:id==='wavelength'?`${$(id).value} nm`:id==='volume'?`${(+$('volume').value).toFixed(2)} µL`:`${(+$(id).value).toFixed(2)} mm`;
+ const N=1024,lookup=Array.from({length:N+1},(_,i)=>trace(g,g.silhouette*Math.min(i/N,.999999999),options));
+ const dry=trace(g,g.silhouette*2+1,options),basePower=dry.throughput,scale=200,w=cvs.width,h=cvs.height;
+ const image=ctx.createImageData(w,h);let unavailable=0;
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+  const dx=(x-w/2)/scale,dy=(y-h/2)/scale,r=Math.hypot(dx,dy);let sx=dx,sy=dy,power=basePower,valid=true;
+  if(r<g.silhouette){const f=r/g.silhouette*N,i=Math.min(N-1,Math.floor(f)),u=f-i,a=lookup[i],b=lookup[i+1];
+   if(a.status==='source'&&b.status==='source'){const source=a.sourceRadius*(1-u)+b.sourceRadius*u,k=r>1e-12?source/r:1;sx=dx*k;sy=dy*k;power=a.throughput*(1-u)+b.throughput*u;}
+   else{valid=false;unavailable++;}
+  }
+  const at=(y*w+x)*4;
+  if(valid){
+   const tx=mod(sx*scale+300,600),ty=mod(sy*scale+300,600),ix=Math.floor(tx),iy=Math.floor(ty),u=tx-ix,v=ty-iy;
+   const a=(iy*600+ix)*4,b=(iy*600+(ix+1)%600)*4,c=(((iy+1)%600)*600+ix)*4,d=(((iy+1)%600)*600+(ix+1)%600)*4;
+   const wa=(1-u)*(1-v)*power,wb=u*(1-v)*power,wc=(1-u)*v*power,wd=u*v*power;
+   for(let channel=0;channel<3;channel++)image.data[at+channel]=pixels[a+channel]*wa+pixels[b+channel]*wb+pixels[c+channel]*wc+pixels[d+channel]*wd;
+  }else{const hatch=((x+y)%12)<3?116:220;image.data[at]=image.data[at+1]=image.data[at+2]=hatch;}
+  image.data[at+3]=255;
+ }
+ ctx.putImageData(image,0,0);ctx.strokeStyle='#247b9b';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(w/2,h/2,g.silhouette*scale,0,2*Math.PI);ctx.stroke();ctx.setLineDash([5,5]);ctx.strokeStyle='#8555a0';ctx.beginPath();ctx.arc(w/2,h/2,g.a*scale,0,2*Math.PI);ctx.stroke();ctx.setLineDash([]);
+ const J=paraxialJacobian(g,options),magnification=Math.abs(J)<.005?'Near singular':`${(1/J).toFixed(2)}×`;
+ const facts=[['Height',g.h.toFixed(3)+' mm'],['Contact radius',g.a.toFixed(3)+' mm'],['Curvature radius',g.R.toFixed(3)+' mm'],['Water index',options.nWater.toFixed(6)],['Central signed magnification',magnification],['Bond number (height)',g.bondH.toFixed(3)]];
+ $('facts').replaceChildren(...facts.map(([name,value])=>{const item=document.createElement('span');item.textContent=name;const v=document.createElement('strong');v.textContent=value;item.append(v);return item;}));
+ const high=Math.max(g.bondA,g.bondH)>.1;$('validity').classList.toggle('gravity',high);
+ $('validity').textContent=high?'Gravity may noticeably change this shape. The spherical cap is still shown for comparison; a Young–Laplace gravity solver is the next model. The 0.1 marker is an engineering caution, not a validated error bound.':'Surface tension dominates this first approximation. The small Bond numbers support a spherical cap; they do not establish an exact experimental match.';
+ section(g,options);rainbowFigure();$('status').textContent=`1,025 radial rays · ${(performance.now()-begin).toFixed(0)} ms on this device${unavailable?' · some paths miss the page':''}.`;
+ window.study={geometry:g,options,lookup,centralJacobian:J,unavailable};
+}
+function request(){if(!queued){queued=true;requestAnimationFrame(render);}}
+for(const id of controls)$(id).addEventListener('input',request);
+$('pattern').addEventListener('change',()=>{pattern();request();});
+$('incidence').addEventListener('input',rainbowFigure);
+$('stationary').addEventListener('click',()=>{$('incidence').value=rainbowStationary(waterIndex(+$('wavelength').value)).toFixed(1);rainbowFigure();});
+for(const button of document.querySelectorAll('[data-angle]'))button.addEventListener('click',()=>{$('angle').value=button.dataset.angle;request();});
+pattern();render();
+
+}
+
+})();
+</script></main></html>

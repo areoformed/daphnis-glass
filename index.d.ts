@@ -1,3 +1,6 @@
+import type {Optics, ResolvedOptics, OpticalMapStats} from './optics.js';
+export {defaultOptics, interfaceRay} from './optics.js';
+export type {Optics, ResolvedOptics, OpticalMapStats} from './optics.js';
 export type Material = 'auto' | 'refracted' | 'frosted' | 'translucent' | 'solid';
 export interface Recipe {
   bend: number; roughness: number; rim: number; blur: number; displacement: number;
@@ -6,17 +9,21 @@ export interface Recipe {
 export interface Options {
   material?: Material;
   recipes?: Partial<Record<'refracted' | 'frosted', Partial<Recipe>>>;
+  optics?: Optics | null;
 }
 export interface SurfaceState {
   element: Element;
   material: Exclude<Material,'auto'> | undefined;
   renderer: 'svg' | 'css' | undefined;
   engine: 'webgpu' | 'wasm' | 'javascript' | null;
+  optics: OpticalMapStats | null;
+  opticsError: string | null;
 }
 export interface GlassController {
-  readonly state: {requested: Material; destroyed: boolean; surfaces: SurfaceState[]};
+  readonly state: {requested: Material; destroyed: boolean; optics: ResolvedOptics | null; surfaces: SurfaceState[]};
   setMaterial(material: Material): void;
   setRecipes(recipes: Options['recipes']): void;
+  setOptics(optics: Optics | null): void;
   refresh(): void;
   destroy(): void;
 }

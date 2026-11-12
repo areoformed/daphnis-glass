@@ -3,7 +3,7 @@ import http from 'node:http';
 import {readFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 const root=new URL('../',import.meta.url),port=Number(process.env.PORT||8798);
-const allowed=new Set(['demo/index.html','demo/demo.css','demo/demo.js','glass.js','maps.js','glass.css','README.md','examples/as-we-may-think/index.html','examples/as-we-may-think/reading.css','examples/as-we-may-think/reading.js','examples/as-we-may-think/README.md']);
+const allowed=new Set(['demo/index.html','demo/demo.css','demo/demo.js','glass.js','maps.js','optics.js','OPTICS.md','glass.css','README.md','examples/as-we-may-think/index.html','examples/as-we-may-think/reading.css','examples/as-we-may-think/reading.js','examples/as-we-may-think/README.md']);
 const types={html:'text/html',css:'text/css',js:'text/javascript',md:'text/plain'};
 const csp="default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
 const server=http.createServer(async(req,res)=>{

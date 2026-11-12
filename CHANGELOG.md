@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Added a standalone As We May Think reading example with section links, text-size controls and a glass reading bar. Essay attribution and rights are documented separately from the MIT-licensed demo code.
+
 ## 0.1.0
 
 First standalone release candidate extracted from the Felt prototype.

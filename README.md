@@ -18,6 +18,8 @@ Open the local address printed by the server. The demo uses ordinary HTML contro
 
 The server binds only to loopback and serves an explicit list of demo/component files. It is a development convenience, not a hosting server.
 
+For a complete static-page example, open [As We May Think](examples/as-we-may-think/index.html), available at `/examples/as-we-may-think/` on the local server. It is a plain reading page with a sticky glass toolbar, section links, text-size controls and surface selection. The essay is separate from the MIT-licensed code; see the [content and attribution note](examples/as-we-may-think/README.md). The example is included in the source tree and source ZIP, rather than the npm runtime package.
+
 ## Use it
 
 Copy `glass.js`, `maps.js`, and `glass.css` together, or install the prepared local tarball:

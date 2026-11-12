@@ -11,6 +11,7 @@
     </div>
   </div>
   <label class="finish-control"><span>Finish</span>
+    <span class="finish-select">
     <select id="surface" aria-describedby="finish-description" disabled>
       <option value="auto" data-description="Follows your accessibility preferences and uses the richest supported surface." data-bend="0.9" data-roughness="0.15" data-grain-size="160" data-blur="0.75" data-tint="0.55" data-etched="true" selected>Automatic</option>
       <option value="refracted" data-description="A clear pane with a refracting rim." data-bend="0.9" data-roughness="0.15" data-grain-size="160" data-blur="0.75" data-tint="0.55" data-etched="true">Liquid glass</option>
@@ -18,6 +19,7 @@
       <option value="translucent" data-description="A tinted pane without blur or optical distortion." data-bend="0" data-roughness="0" data-grain-size="160" data-blur="0" data-tint="0.85" data-etched="false">Translucent glass</option>
       <option value="solid" data-description="An opaque surface that separates the controls from the page." data-bend="0" data-roughness="0" data-grain-size="160" data-blur="0" data-tint="0.95" data-etched="true">Solid pane</option>
     </select>
+    </span>
   </label>
   <span id="progress" class="reading-progress" aria-label="Reading progress: 0 percent">0%</span>
   <details class="glass-settings" id="glass-settings">

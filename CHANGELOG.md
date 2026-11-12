@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Gave the finish chevron a consistent visible size and inset, with text clearance and a native forced-color fallback.
+
 - Promoted Finish to the reading bar, named and declared finish recipes in HTML, and kept only fine adjustments behind the gear. Reset now restores the currently selected finish.
 - Added a standalone As We May Think reading example with section links, text-size controls and a glass reading bar. Essay attribution and rights are documented separately from the MIT-licensed demo code.
 - Reworked the reader into a continuous bar with a discreet settings panel, three presets and independent optical/tint/etching controls.

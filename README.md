@@ -85,7 +85,7 @@ Recipe fields are `bend` and `roughness` (0–1), `rim` (0.5–64 px), `blur` (0
 }
 ```
 
-The grain is static and embedded. It varies in size, strength and dispersal; there is no animated noise shader or frame loop. The etched ring uses a masked grain band where supported, with an inset border/shadow fallback. All decoration leaves pointer events and foreground content alone. Focus styling remains the host application's responsibility; the demo includes it.
+The grain is static and embedded. It varies in size, strength and dispersal; there is no animated noise shader or frame loop. The etched ring uses a masked grain band where supported, with an inset border/shadow fallback. All decoration leaves pointer events and foreground content alone. Focus styling remains the host application's responsibility; the demo includes it. Judge icon clearance from the rendered shape, its weight and its visible gap to the control boundary. A nominal layout box or padding value does not establish sufficient visual space.
 
 ## Fallbacks within fallbacks
 

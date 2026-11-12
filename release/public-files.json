@@ -1,5 +1,6 @@
 {
   "source_files": [
+    ".gitignore",
     "AUTHORS.md",
     "CHANGELOG.md",
     "LICENSE",
@@ -19,10 +20,12 @@
     "maps.js",
     "package.json",
     "release/public-files.json",
+    "scripts/build-site.mjs",
     "scripts/glass-grain.py",
     "scripts/glass-map.c",
     "scripts/release.py",
     "tests/browser.mjs",
+    "tests/reading-browser.mjs",
     "tests/unit.mjs"
   ],
   "npm_files": [

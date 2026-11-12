@@ -3,6 +3,9 @@
 ## Unreleased
 
 - Added a standalone As We May Think reading example with section links, text-size controls and a glass reading bar. Essay attribution and rights are documented separately from the MIT-licensed demo code.
+- Reworked the reader into a continuous bar with a discreet settings panel, three presets and independent optical/tint/etching controls.
+- Added an independent solid and CSS surface path when shared glass files fail to load, with stylesheet readiness checked before activating optics.
+- Added an allowlisted static-site exporter for Pages, Workers Static Assets and ordinary file hosting, including root and 404 pages.
 
 ## 0.1.0
 

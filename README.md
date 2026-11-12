@@ -20,6 +20,8 @@ The server binds only to loopback and serves an explicit list of demo/component 
 
 For a complete static-page example, open [As We May Think](examples/as-we-may-think/index.html), available at `/examples/as-we-may-think/` on the local server. It is a plain reading page with a sticky glass toolbar, section links, text-size controls and surface selection. The essay is separate from the MIT-licensed code; see the [content and attribution note](examples/as-we-may-think/README.md). The example is included in the source tree and source ZIP, rather than the npm runtime package.
 
+`npm run build:site` exports a complete static website into `site/`, including every shared asset and a root entry page. For Cloudflare Pages use that build command and `site` as the output directory. For Workers Static Assets use the same generated directory. Deploy the whole output, rather than just the example folder. The reading bar has its own solid/CSS fallback when the shared glass files fail to load. Its gear opens presets and finer material controls; see the [example guide](examples/as-we-may-think/README.md).
+
 ## Use it
 
 Copy `glass.js`, `maps.js`, and `glass.css` together, or install the prepared local tarball:
@@ -111,6 +113,8 @@ FELT_TEST_CDP_PORT=9222 npm run test:browser
 ```
 
 Start the demo first. The tests create/close their own tab and deliberately simulate failures. Use a disposable Chrome profile, never your regular browser profile. See `VALIDATION.md` for the actual tested platform and limits.
+
+With the same isolated debugging port, `npm run test:reading` checks the reading bar, presets, settings, missing CSS/modules and simpler rendering paths. Set `FELT_TEST_ORIGIN` to a local static-site server to test the exported website instead of the development server. When validating a source release, export the website outside the checkout (`node scripts/build-site.mjs /tmp/daphnis-site`); the release map deliberately rejects generated site output in the source tree.
 
 `scripts/glass-map.c` reproduces the embedded no-import WASM module; its build command is in the source. `scripts/glass-grain.py` generates the original static texture using Python's standard library.
 

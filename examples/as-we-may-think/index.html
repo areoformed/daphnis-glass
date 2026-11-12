@@ -3,10 +3,38 @@
 <body id="top"><a class="skip-link" href="#essay">Skip to the essay</a>
 <header class="masthead"><a class="project" href="../../demo/">Daphnis Glass</a><h1>As We May Think</h1><p class="byline">Vannevar Bush <span aria-hidden="true">·</span> July 1945</p><nav class="sections" aria-label="Essay sections"><span>Sections</span><a href="#section-1" aria-label="Section 1">1</a><a href="#section-2" aria-label="Section 2">2</a><a href="#section-3" aria-label="Section 3">3</a><a href="#section-4" aria-label="Section 4">4</a><a href="#section-5" aria-label="Section 5">5</a><a href="#section-6" aria-label="Section 6">6</a><a href="#section-7" aria-label="Section 7">7</a><a href="#section-8" aria-label="Section 8">8</a></nav></header>
 <nav class="reading-bar fg-glass" aria-label="Reading controls">
-<a class="reading-button top-link fg-etch" href="#top" aria-label="Back to the title"><span aria-hidden="true">↑</span></a>
-<div class="size-controls" role="group" aria-label="Text size"><button id="smaller" class="reading-button fg-etch" type="button" aria-label="Decrease text size" disabled>A−</button><button id="larger" class="reading-button fg-etch" type="button" aria-label="Increase text size" disabled>A+</button></div>
-<label class="surface-label"><span class="visually-hidden">Glass surface</span><select id="surface" disabled><option value="auto" selected>Automatic</option><option value="refracted">Liquid glass</option><option value="frosted">Burred glass</option><option value="translucent">Translucent</option><option value="solid">Solid</option></select></label>
-<span id="progress" class="reading-progress" aria-label="Reading progress: 0 percent">0%</span>
+  <div class="bar-navigation">
+    <a class="reading-button top-link fg-etch" href="#top" aria-label="Back to the title"><span aria-hidden="true">↑</span></a>
+    <div class="size-controls" role="group" aria-label="Text size">
+      <button id="smaller" class="reading-button fg-etch" type="button" aria-label="Decrease text size" disabled>A−</button>
+      <button id="larger" class="reading-button fg-etch" type="button" aria-label="Increase text size" disabled>A+</button>
+    </div>
+  </div>
+  <span class="bar-title" aria-hidden="true">As We May Think</span>
+  <span id="progress" class="reading-progress" aria-label="Reading progress: 0 percent">0%</span>
+  <details class="glass-settings" id="glass-settings">
+    <summary class="reading-button settings-toggle" aria-label="Glass options"><span aria-hidden="true">⚙</span></summary>
+    <div class="settings-panel" aria-label="Glass options">
+      <div class="panel-heading"><h2>Glass</h2><button class="reset-button" id="reset-glass" type="button" disabled>Reset</button></div>
+      <p class="panel-note">Try a finish, then make it your own.</p>
+      <div class="presets" role="group" aria-label="Glass presets">
+        <button type="button" data-preset="lens" aria-pressed="true" disabled>Clear lens</button>
+        <button type="button" data-preset="burred" aria-pressed="false" disabled>Burred</button>
+        <button type="button" data-preset="quiet" aria-pressed="false" disabled>Quiet</button>
+      </div>
+      <label class="setting-row surface-row"><span>Surface</span><select id="surface" disabled><option value="auto" selected>Automatic</option><option value="refracted">Liquid glass</option><option value="frosted">Burred glass</option><option value="translucent">Translucent</option><option value="solid">Solid</option></select></label>
+      <div class="tuning-controls">
+        <label class="setting-row"><span>Refraction</span><input id="bend" type="range" min="0" max="1" step="0.05" value="0.9" disabled><output for="bend">0.9</output></label>
+        <label class="setting-row"><span>Grain</span><input id="roughness" type="range" min="0" max="1" step="0.05" value="0.15" disabled><output for="roughness">0.15</output></label>
+        <label class="setting-row"><span>Grain size</span><input id="grain-size" type="range" min="64" max="256" step="8" value="160" disabled><output for="grain-size">160</output></label>
+        <label class="setting-row"><span>Blur</span><input id="blur" type="range" min="0" max="8" step="0.25" value="0.75" disabled><output for="blur">0.75</output></label>
+        <label class="setting-row"><span>Tint</span><input id="tint" type="range" min="0.3" max="0.95" step="0.05" value="0.55" disabled><output for="tint">0.55</output></label>
+      </div>
+      <label class="etch-toggle"><input id="etched" type="checkbox" checked disabled> Etched controls</label>
+      <p id="finish-status" class="finish-status" role="status">Solid bar ready. Glass enhancements are optional.</p>
+      <p class="panel-footnote">Your browser picks the supported finish. Reading controls stay available.</p>
+    </div>
+  </details>
 </nav>
 <main id="essay" class="essay" tabindex="-1"><article aria-label="As We May Think by Vannevar Bush">
 <p id="passage-001">This has not been a scientist’s war; it has been a war in which all have had a part. The scientists, burying their old professional competition in the demand of a common cause, have shared greatly and learned much. It has been exhilarating to work in effective partnership. Now, for many, this appears to be approaching an end. What are the scientists to do next?</p>

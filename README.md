@@ -124,3 +124,5 @@ python3 scripts/release.py --output /tmp/felt-glass-release
 ```
 
 The exporter accepts only the explicit release file map, rejects unknown files and links, scans for private material, runs unit checks, checks the npm package membership, and creates checksummed source ZIP and npm tarball archives. It performs no publishing or remote writes.
+
+Future material work is recorded in the [optics roadmap](https://github.com/areoformed/daphnis-glass/blob/main/ROADMAP.md). Index of refraction and physical depth are deferred; the current implementation remains a displacement-based approximation.

@@ -9,11 +9,6 @@ const status = document.querySelector('#reading-status');
 const finish = document.querySelector('#finish-status');
 const settings = document.querySelector('#glass-settings');
 const inputs = Object.fromEntries(['bend','roughness','grain-size','blur','tint','etched'].map(id => [id,document.getElementById(id)]));
-const presets = {
-  lens: {surface:'auto',bend:.9,roughness:.15,'grain-size':160,blur:.75,tint:.55,etched:true},
-  burred: {surface:'frosted',bend:.15,roughness:1,'grain-size':192,blur:2,tint:.5,etched:true},
-  quiet: {surface:'translucent',bend:0,roughness:0,'grain-size':160,blur:0,tint:.85,etched:false}
-};
 let size = 20, frame = 0, tuningFrame = 0, glass, observer, departed = false;
 
 function resize(delta) {
@@ -55,7 +50,7 @@ function localMaterial() {
 function updateFinish() {
   const material = glass?.state.surfaces[0]?.material || localMaterial();
   const rich = glass?.state.surfaces[0]?.renderer === 'svg';
-  const names = {refracted:'Liquid glass',frosted:rich?'Burred glass':'Frosted pane',translucent:'Translucent pane',solid:'Solid pane'};
+  const names = {refracted:'Liquid glass',frosted:rich?'Burred glass':'Frosted pane',translucent:'Translucent glass',solid:'Solid pane'};
   finish.textContent = names[material] + (glass ? '.' : ' · basic finish.');
   inputs.bend.disabled = !rich || material !== 'refracted';
   inputs.roughness.disabled = !rich;
@@ -79,19 +74,24 @@ function apply() {
   updateFinish();
 }
 function queueTuning() { if (!tuningFrame) tuningFrame = requestAnimationFrame(apply); }
-function choosePreset(name) {
-  const preset = presets[name];
-  surface.value = preset.surface;
-  for (const [id,input] of Object.entries(inputs)) { if (input.type === 'checkbox') input.checked = preset[id]; else input.value = preset[id]; }
-  document.querySelectorAll('[data-preset]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.preset === name)));
+// The native options declare each named finish and all of its starting values.
+function chooseFinish() {
+  const option = surface.selectedOptions[0];
+  for (const [id,input] of Object.entries(inputs)) {
+    const value = option.getAttribute('data-' + id);
+    if (input.type === 'checkbox') input.checked = value === null ? input.defaultChecked : value === 'true';
+    else input.value = value ?? input.defaultValue;
+  }
+  document.querySelector('#finish-name').textContent = option.textContent.trim();
+  document.querySelector('#finish-description').textContent = option.dataset.description;
   apply();
 }
-function custom() { document.querySelectorAll('[data-preset]').forEach(button => button.setAttribute('aria-pressed','false')); queueTuning(); }
-for (const input of [surface,...Object.values(inputs)]) { input.disabled = false; input.addEventListener('input',custom); }
-for (const button of document.querySelectorAll('[data-preset]')) { button.disabled = false; button.addEventListener('click',() => choosePreset(button.dataset.preset)); }
+surface.disabled = false;
+surface.addEventListener('input',chooseFinish);
+for (const input of Object.values(inputs)) { input.disabled = false; input.addEventListener('input',queueTuning); }
 const reset = document.querySelector('#reset-glass');
 reset.disabled = false;
-reset.addEventListener('click',() => choosePreset('lens'));
+reset.addEventListener('click',chooseFinish);
 for (const setting of media) { if (setting?.addEventListener) setting.addEventListener('change',apply); else setting?.addListener?.(apply); }
 function fitPanel() {
   const box = bar.getBoundingClientRect();
@@ -103,8 +103,8 @@ function fitPanel() {
 settings.addEventListener('toggle',fitPanel);
 // Native details works without JS; Escape and outside click are conveniences.
 document.addEventListener('keydown',event => { if (event.key === 'Escape' && settings.open) { settings.open = false; settings.querySelector('summary').focus(); } });
-document.addEventListener('pointerdown',event => { if (settings.open && !settings.contains(event.target)) settings.open = false; });
-apply();
+document.addEventListener('pointerdown',event => { if (settings.open && !settings.contains(event.target) && !event.target.closest?.('.finish-control')) settings.open = false; });
+chooseFinish();
 
 try {
   const {createGlass} = await import('../../glass.js');

@@ -10,19 +10,21 @@
       <button id="larger" class="reading-button fg-etch" type="button" aria-label="Increase text size" disabled>A+</button>
     </div>
   </div>
-  <span class="bar-title" aria-hidden="true">As We May Think</span>
+  <label class="finish-control"><span>Finish</span>
+    <select id="surface" aria-describedby="finish-description" disabled>
+      <option value="auto" data-description="Follows your accessibility preferences and uses the richest supported surface." data-bend="0.9" data-roughness="0.15" data-grain-size="160" data-blur="0.75" data-tint="0.55" data-etched="true" selected>Automatic</option>
+      <option value="refracted" data-description="A clear pane with a refracting rim." data-bend="0.9" data-roughness="0.15" data-grain-size="160" data-blur="0.75" data-tint="0.55" data-etched="true">Liquid glass</option>
+      <option value="frosted" data-description="A roughened surface that softens the view beneath it." data-bend="0.15" data-roughness="1" data-grain-size="192" data-blur="2" data-tint="0.5" data-etched="true">Burred glass</option>
+      <option value="translucent" data-description="A tinted pane without blur or optical distortion." data-bend="0" data-roughness="0" data-grain-size="160" data-blur="0" data-tint="0.85" data-etched="false">Translucent glass</option>
+      <option value="solid" data-description="An opaque surface that separates the controls from the page." data-bend="0" data-roughness="0" data-grain-size="160" data-blur="0" data-tint="0.95" data-etched="true">Solid pane</option>
+    </select>
+  </label>
   <span id="progress" class="reading-progress" aria-label="Reading progress: 0 percent">0%</span>
   <details class="glass-settings" id="glass-settings">
     <summary class="reading-button settings-toggle" aria-label="Glass options"><span aria-hidden="true">⚙</span></summary>
     <div class="settings-panel" aria-label="Glass options">
-      <div class="panel-heading"><h2>Glass</h2><button class="reset-button" id="reset-glass" type="button" disabled>Reset</button></div>
-      <p class="panel-note">Try a finish, then make it your own.</p>
-      <div class="presets" role="group" aria-label="Glass presets">
-        <button type="button" data-preset="lens" aria-pressed="true" disabled>Clear lens</button>
-        <button type="button" data-preset="burred" aria-pressed="false" disabled>Burred</button>
-        <button type="button" data-preset="quiet" aria-pressed="false" disabled>Quiet</button>
-      </div>
-      <label class="setting-row surface-row"><span>Surface</span><select id="surface" disabled><option value="auto" selected>Automatic</option><option value="refracted">Liquid glass</option><option value="frosted">Burred glass</option><option value="translucent">Translucent</option><option value="solid">Solid</option></select></label>
+      <div class="panel-heading"><h2 id="finish-name">Automatic</h2><button class="reset-button" id="reset-glass" type="button" disabled>Reset</button></div>
+      <p class="panel-note" id="finish-description">Follows your accessibility preferences and uses the richest supported surface.</p>
       <div class="tuning-controls">
         <label class="setting-row"><span>Refraction</span><input id="bend" type="range" min="0" max="1" step="0.05" value="0.9" disabled><output for="bend">0.9</output></label>
         <label class="setting-row"><span>Grain</span><input id="roughness" type="range" min="0" max="1" step="0.05" value="0.15" disabled><output for="roughness">0.15</output></label>

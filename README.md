@@ -20,7 +20,7 @@ The server binds only to loopback and serves an explicit list of demo/component 
 
 For a complete static-page example, open [As We May Think](examples/as-we-may-think/index.html), available at `/examples/as-we-may-think/` on the local server. It is a plain reading page with a sticky glass toolbar, section links, text-size controls and surface selection. The essay is separate from the MIT-licensed code; see the [content and attribution note](examples/as-we-may-think/README.md). The example is included in the source tree and source ZIP, rather than the npm runtime package.
 
-`npm run build:site` exports a complete static website into `site/`, including every shared asset and a root entry page. For Cloudflare Pages use that build command and `site` as the output directory. For Workers Static Assets use the same generated directory. Deploy the whole output, rather than just the example folder. The reading bar has its own solid/CSS fallback when the shared glass files fail to load. Its gear opens presets and finer material controls; see the [example guide](examples/as-we-may-think/README.md).
+`npm run build:site` exports a complete static website into `site/`, including every shared asset and a root entry page. For Cloudflare Pages use that build command and `site` as the output directory. For Workers Static Assets use the same generated directory. Deploy the whole output, rather than just the example folder. The reading bar has its own solid/CSS fallback when the shared glass files fail to load. Its named Finish selector is directly on the bar, with finer adjustments behind the gear. Finishes and starting values are declared in the HTML; see the [example guide](examples/as-we-may-think/README.md).
 
 ## Use it
 
